@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
-import '../../../models/campus_place.dart';
-import '../../../services/location_service.dart';
+import '../../campus_map/models/campus_place.dart';
+import '../../location/services/location_service.dart';
 
 class ArCameraOverlay extends StatelessWidget {
   const ArCameraOverlay({

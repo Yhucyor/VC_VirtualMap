@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:geolocator/geolocator.dart';
 
-import '../models/campus_place.dart';
+import '../../campus_map/models/campus_place.dart';
 
 class LocationService {
   const LocationService._();

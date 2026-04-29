@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
-import '../models/campus_place.dart';
-import '../services/location_service.dart';
-import '../widgets/app_panel.dart';
-import '../widgets/ar_navigation_preview.dart';
-import '../widgets/location_status_card.dart';
+import '../../../shared/widgets/app_panel.dart';
+import '../../ar_navigation/widgets/ar_navigation_preview.dart';
+import '../../campus_map/models/campus_place.dart';
+import '../../location/services/location_service.dart';
+import '../../location/widgets/location_status_card.dart';
 
 class RoutePreviewPage extends StatefulWidget {
   const RoutePreviewPage({

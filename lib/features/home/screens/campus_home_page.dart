@@ -3,15 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
-import '../data/campus_places.dart';
-import '../models/campus_place.dart';
-import '../services/location_service.dart';
-import '../widgets/app_panel.dart';
-import '../widgets/campus_map_preview.dart';
-import '../widgets/destination_detail_card.dart';
-import '../widgets/destination_picker.dart';
-import '../widgets/location_status_card.dart';
-import '../features/ar_camera/screens/camera_navigation_page.dart';
+import '../../../shared/widgets/app_panel.dart';
+import '../../ar_camera/screens/camera_navigation_page.dart';
+import '../../campus_map/data/campus_places.dart';
+import '../../campus_map/models/campus_place.dart';
+import '../../campus_map/widgets/campus_map_preview.dart';
+import '../../destination/widgets/destination_detail_card.dart';
+import '../../destination/widgets/destination_picker.dart';
+import '../../location/services/location_service.dart';
+import '../../location/widgets/location_status_card.dart';
 
 class CampusHomePage extends StatefulWidget {
   const CampusHomePage({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../models/campus_place.dart';
-import 'app_panel.dart';
+import '../../../shared/widgets/app_panel.dart';
+import '../../campus_map/models/campus_place.dart';
 
 class DestinationPicker extends StatelessWidget {
   const DestinationPicker({

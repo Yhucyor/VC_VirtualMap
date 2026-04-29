@@ -4,8 +4,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
-import '../../../models/campus_place.dart';
-import '../../../services/location_service.dart';
+import '../../campus_map/models/campus_place.dart';
+import '../../location/services/location_service.dart';
 import '../widgets/ar_camera_overlay.dart';
 
 class CameraNavigationPage extends StatefulWidget {

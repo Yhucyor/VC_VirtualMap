@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'screens/login_page.dart';
+import 'features/auth/screens/login_page.dart';
 
 class UteNavigationApp extends StatelessWidget {
   const UteNavigationApp({super.key});
