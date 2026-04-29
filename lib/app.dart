@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'core/app_theme.dart';
 import 'features/auth/screens/login_page.dart';
 
 class UteNavigationApp extends StatelessWidget {
@@ -10,11 +11,7 @@ class UteNavigationApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'UTE AR Navigation',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF087F8C)),
-        scaffoldBackgroundColor: const Color(0xFFF5F7F4),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme,
       home: const LoginPage(),
     );
   }

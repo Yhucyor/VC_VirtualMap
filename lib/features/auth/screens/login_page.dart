@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../home/screens/campus_home_page.dart';
+import '../../../widgets/ute_map_logo.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -28,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+
 
     return Scaffold(
       body: SafeArea(
@@ -40,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Icon(Icons.explore, size: 76, color: colorScheme.primary),
+                  const UteMapLogo(size: 130),
                   const SizedBox(height: 16),
                   Text(
                     'UTE AR Navigation',
