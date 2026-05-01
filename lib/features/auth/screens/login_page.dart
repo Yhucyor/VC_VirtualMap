@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../home/screens/campus_home_page.dart';
 import '../../../widgets/ute_map_logo.dart';
 
 class LoginPage extends StatefulWidget {
@@ -22,15 +21,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _login() {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute<void>(builder: (_) => const CampusHomePage()),
-    );
+    Navigator.of(context).pushReplacementNamed('/home');
   }
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -41,10 +36,10 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const UteMapLogo(size: 130),
+                  const UteMapLogo(size: 132),
                   const SizedBox(height: 16),
                   Text(
-                    'UTE AR Navigation',
+                    'camapus',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.w900,
@@ -52,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    'Tìm phòng học trong Trường ĐH Sư phạm Kỹ thuật TP.HCM',
+                    'Bản đồ campus và điều hướng AR cho nhiều trường đại học.',
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 28),

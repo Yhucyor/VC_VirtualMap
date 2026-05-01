@@ -1,43 +1,28 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  // The primary color combinations with different tones/levels as requested
-  static const Map<int, Color> primaryTones = {
-    50: Color(0xFFE3F2FD),
-    100: Color(0xFFBBDEFB),
-    200: Color(0xFF90CAF9),
-    300: Color(0xFF64B5F6),
-    400: Color(0xFF42A5F5),
-    500: Color(0xFF87CEEB),
-    600: Color(0xFF64B5F6),
-    700: Color(0xFF42A5F5),
-    800: Color(0xFF2196F3),
-    900: Color(0xFF1976D2),
-  };
-
+  // Primary and secondary colors
   static const Color primary = Color(0xFF87CEEB);
-  static const Color secondary = Color(0xFFE53935); // Vibrant accent color
+  static const Color secondary = Color(0xFFE53935);
   static const Color background = Color(0xFFF5F7F4);
-  
+
+  // Light theme with Material 3 (fromSeed for harmonious palette)
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
-      colorScheme: ColorScheme(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: primary,
         brightness: Brightness.light,
-        primary: primary,
-        onPrimary: Colors.white,
-        primaryContainer: primaryTones[100]!,
-        onPrimaryContainer: primaryTones[900]!,
         secondary: secondary,
-        onSecondary: Colors.white,
-        secondaryContainer: secondary.withValues(alpha: 0.2),
-        onSecondaryContainer: secondary,
-        error: Colors.red,
-        onError: Colors.white,
-        surface: Colors.white,
-        onSurface: const Color(0xFF1C1B1F),
-      ),
+      ).copyWith(surface: background, onSurface: const Color(0xFF1C1B1F)),
       scaffoldBackgroundColor: background,
+      inputDecorationTheme: const InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+        ),
+        filled: true,
+        fillColor: Colors.white,
+      ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           backgroundColor: primary,
@@ -48,21 +33,36 @@ class AppTheme {
           ),
         ),
       ),
-      inputDecorationTheme: InputDecorationTheme(
+    );
+  }
+
+  // Dark theme with matching palette
+  static ThemeData get darkTheme {
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.dark,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: primary,
+        brightness: Brightness.dark,
+        secondary: secondary,
+      ).copyWith(surface: const Color(0xFF1E1E1E), onSurface: Colors.white70),
+      scaffoldBackgroundColor: const Color(0xFF121212),
+      inputDecorationTheme: const InputDecorationTheme(
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: primaryTones[300]!),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: primaryTones[200]!),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: primary, width: 2),
+          borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
         filled: true,
-        fillColor: Colors.white,
+        fillColor: Color(0xFF1E1E1E),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          backgroundColor: primary,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
       ),
     );
   }

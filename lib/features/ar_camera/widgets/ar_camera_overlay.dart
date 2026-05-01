@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -33,7 +35,7 @@ class ArCameraOverlay extends StatelessWidget {
 
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 74, 16, 20),
+        padding: const EdgeInsets.fromLTRB(16, 74, 16, 184),
         child: Column(
           children: [
             _TopHud(
@@ -43,8 +45,10 @@ class ArCameraOverlay extends StatelessWidget {
               gpsMessage: gpsMessage,
             ),
             const Spacer(),
+            _RouteRibbon(bearing: bearing),
+            const SizedBox(height: 8),
             _DirectionArrow(bearing: bearing),
-            const SizedBox(height: 18),
+            const SizedBox(height: 12),
             _BottomHud(
               destination: destination,
               distance: distance,
@@ -57,6 +61,85 @@ class ArCameraOverlay extends StatelessWidget {
       ),
     );
   }
+}
+
+class _RouteRibbon extends StatelessWidget {
+  const _RouteRibbon({required this.bearing});
+
+  final double bearing;
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.rotate(
+      angle: LocationService.bearingToRadians(bearing) * 0.18,
+      child: SizedBox(
+        height: 120,
+        width: double.infinity,
+        child: CustomPaint(painter: _RouteRibbonPainter()),
+      ),
+    );
+  }
+}
+
+class _RouteRibbonPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final centerY = size.height * 0.54;
+    final routePaint = Paint()
+      ..color = const Color(0xDD65DCEB)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 24
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+
+    final route = Path()
+      ..moveTo(size.width * 0.06, size.height * 0.84)
+      ..quadraticBezierTo(
+        size.width * 0.28,
+        size.height * 0.48,
+        size.width * 0.50,
+        centerY,
+      )
+      ..quadraticBezierTo(
+        size.width * 0.72,
+        size.height * 0.60,
+        size.width * 0.96,
+        size.height * 0.28,
+      );
+    canvas.drawPath(route, routePaint);
+
+    final edgePaint = Paint()
+      ..color = const Color(0x9965DCEB)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 4
+      ..strokeCap = StrokeCap.round;
+    canvas.drawPath(route, edgePaint);
+
+    final arrowPaint = Paint()..color = const Color(0xFFB8F9FF);
+    for (var i = 0; i < 7; i++) {
+      final t = i / 6;
+      final x = size.width * (0.20 + 0.66 * t);
+      final y = size.height * (0.68 - 0.26 * t + 0.05 * math.sin(t * math.pi));
+      final arrow = Path()
+        ..moveTo(x - 10, y - 10)
+        ..lineTo(x + 14, y)
+        ..lineTo(x - 10, y + 10)
+        ..lineTo(x - 2, y)
+        ..close();
+      canvas.drawPath(arrow, arrowPaint);
+    }
+
+    final turnPaint = Paint()..color = const Color(0xEE65DCEB);
+    final turn = Path()
+      ..moveTo(size.width * 0.08, size.height * 0.50)
+      ..lineTo(size.width * 0.30, size.height * 0.42)
+      ..lineTo(size.width * 0.14, size.height * 0.28)
+      ..close();
+    canvas.drawPath(turn, turnPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 class _TopHud extends StatelessWidget {
@@ -184,15 +267,11 @@ class _BottomHud extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 10),
-          _RouteHint(text: destination.routeSteps.first),
           const SizedBox(height: 8),
+          _RouteHint(text: destination.routeSteps.first),
+          const SizedBox(height: 6),
           Text(
             cameraMessage,
-            style: const TextStyle(color: Colors.white70, fontSize: 12),
-          ),
-          Text(
-            gpsMessage,
             style: const TextStyle(color: Colors.white70, fontSize: 12),
           ),
         ],

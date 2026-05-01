@@ -2,16 +2,19 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import '../data/campus_places.dart';
 import '../models/campus_place.dart';
 
 class CampusMapPreview extends StatelessWidget {
   const CampusMapPreview({
     super.key,
+    required this.places,
+    required this.campusName,
     required this.selectedPlace,
     required this.onPlaceSelected,
   });
 
+  final List<CampusPlace> places;
+  final String campusName;
   final CampusPlace selectedPlace;
   final ValueChanged<CampusPlace> onPlaceSelected;
 
@@ -20,7 +23,7 @@ class CampusMapPreview extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _MapHeader(),
+        _MapHeader(campusName: campusName),
         const SizedBox(height: 10),
         AspectRatio(
           aspectRatio: 0.72,
@@ -32,7 +35,7 @@ class CampusMapPreview extends StatelessWidget {
                     size: Size.infinite,
                     painter: _OpenDayMapPainter(),
                   ),
-                  for (final place in campusPlaces)
+                  for (final place in places)
                     Positioned(
                       left: place.mapPosition.dx * constraints.maxWidth - 15,
                       top: place.mapPosition.dy * constraints.maxHeight - 15,
@@ -55,7 +58,9 @@ class CampusMapPreview extends StatelessWidget {
 }
 
 class _MapHeader extends StatelessWidget {
-  const _MapHeader();
+  const _MapHeader({required this.campusName});
+
+  final String campusName;
 
   @override
   Widget build(BuildContext context) {
@@ -64,16 +69,16 @@ class _MapHeader extends StatelessWidget {
         color: const Color(0xFF0B5DA8),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         child: Row(
           children: [
-            Icon(Icons.map, color: Colors.white),
-            SizedBox(width: 10),
+            const Icon(Icons.map, color: Colors.white),
+            const SizedBox(width: 10),
             Expanded(
               child: Text(
-                'SƠ ĐỒ VỊ TRÍ HCM-UTE OPEN DAY 2026',
-                style: TextStyle(
+                'BẢN ĐỒ VỊ TRÍ $campusName',
+                style: const TextStyle(
                   color: Color(0xFFFFD72E),
                   fontWeight: FontWeight.w900,
                   fontSize: 16,
@@ -96,10 +101,10 @@ class _MapLegend extends StatelessWidget {
       spacing: 12,
       runSpacing: 8,
       children: const [
-        _LegendItem(color: Color(0xFF1E5AA8), label: 'Khối nhà 3D'),
-        _LegendItem(color: Color(0xFF78C66A), label: 'Mảng xanh'),
-        _LegendItem(color: Color(0xFFFFF5A8), label: 'Lối đi'),
-        _LegendItem(color: Color(0xFFCC2B7A), label: 'Điểm A/B'),
+        _LegendItem(color: Color(0xFF1E5AA8), label: 'Khá»‘i nhÃ  3D'),
+        _LegendItem(color: Color(0xFF78C66A), label: 'Máº£ng xanh'),
+        _LegendItem(color: Color(0xFFFFF5A8), label: 'Lá»‘i Ä‘i'),
+        _LegendItem(color: Color(0xFFCC2B7A), label: 'Äiá»ƒm A/B'),
       ],
     );
   }
@@ -329,7 +334,7 @@ class _OpenDayMapPainter extends CustomPainter {
     _drawText(
       canvas,
       p,
-      'SÂN VẬN ĐỘNG',
+      'SÃ‚N Váº¬N Äá»˜NG',
       0.71,
       0.77,
       size: 8,
@@ -354,14 +359,23 @@ class _OpenDayMapPainter extends CustomPainter {
       0.06,
       0.09,
       darkBlue,
-      'TÒA NHÀ\nTRUNG TÂM',
+      'TÃ’A NHÃ€\nTRUNG TÃ‚M',
     );
 
-    _building3d(canvas, p, 0.50, 0.58, 0.12, 0.07, darkBlue, 'HỘI TRƯỜNG\nLỚN');
-    _building3d(canvas, p, 0.51, 0.42, 0.11, 0.07, darkBlue, 'THƯ VIỆN');
-    _building3d(canvas, p, 0.45, 0.28, 0.05, 0.12, blue, 'KHU NHÀ C');
-    _building3d(canvas, p, 0.53, 0.28, 0.05, 0.12, blue, 'KHU NHÀ B');
-    _building3d(canvas, p, 0.44, 0.47, 0.05, 0.12, blue, 'KHU NHÀ D');
+    _building3d(
+      canvas,
+      p,
+      0.50,
+      0.58,
+      0.12,
+      0.07,
+      darkBlue,
+      'Há»˜I TRÆ¯á»œNG\nLá»šN',
+    );
+    _building3d(canvas, p, 0.51, 0.42, 0.11, 0.07, darkBlue, 'THÆ¯ VIá»†N');
+    _building3d(canvas, p, 0.45, 0.28, 0.05, 0.12, blue, 'KHU NHÃ€ C');
+    _building3d(canvas, p, 0.53, 0.28, 0.05, 0.12, blue, 'KHU NHÃ€ B');
+    _building3d(canvas, p, 0.44, 0.47, 0.05, 0.12, blue, 'KHU NHÃ€ D');
 
     _building3d(canvas, p, 0.72, 0.56, 0.10, 0.08, blue, 'F1');
     _building3d(canvas, p, 0.72, 0.65, 0.09, 0.07, blue, 'G');
@@ -375,7 +389,16 @@ class _OpenDayMapPainter extends CustomPainter {
       blue,
       'MAKER SPACE\nHCM-UTE',
     );
-    _building3d(canvas, p, 0.31, 0.82, 0.12, 0.09, lightBlue, 'NHÀ THI ĐẤU');
+    _building3d(
+      canvas,
+      p,
+      0.31,
+      0.82,
+      0.12,
+      0.09,
+      lightBlue,
+      'NHÃ€ THI Äáº¤U',
+    );
 
     _buildingFlat(canvas, p, 0.17, 0.63, 0.11, 0.05, lightBlue, '2');
     _buildingFlat(canvas, p, 0.29, 0.63, 0.11, 0.05, lightBlue, '3');
@@ -393,19 +416,19 @@ class _OpenDayMapPainter extends CustomPainter {
       0.04,
       0.12,
       lightBlue,
-      'THANG\nDUY TÂN',
+      'THANG\nDUY TÃ‚N',
     );
   }
 
   void _drawGates(Canvas canvas, _Projector p) {
-    _gate(canvas, p, 0.22, 0.98, 'CỔNG PHỤ');
-    _gate(canvas, p, 0.53, 0.98, 'CỔNG CHÍNH');
-    _gate(canvas, p, 0.83, 0.30, 'CỔNG B');
-    _gate(canvas, p, 0.95, 0.75, 'CỔNG F');
+    _gate(canvas, p, 0.22, 0.98, 'Cá»”NG PHá»¤');
+    _gate(canvas, p, 0.53, 0.98, 'Cá»”NG CHÃNH');
+    _gate(canvas, p, 0.83, 0.30, 'Cá»”NG B');
+    _gate(canvas, p, 0.95, 0.75, 'Cá»”NG F');
     _drawText(
       canvas,
       p,
-      'ĐƯỜNG VÕ VĂN NGÂN',
+      'ÄÆ¯á»œNG VÃ• VÄ‚N NGÃ‚N',
       0.60,
       0.95,
       size: 8,
@@ -414,7 +437,7 @@ class _OpenDayMapPainter extends CustomPainter {
     _drawText(
       canvas,
       p,
-      'ĐƯỜNG LÊ VĂN CHÍ',
+      'ÄÆ¯á»œNG LÃŠ VÄ‚N CHÃ',
       0.88,
       0.42,
       size: 8,
@@ -423,7 +446,15 @@ class _OpenDayMapPainter extends CustomPainter {
   }
 
   void _drawHealthAndBooths(Canvas canvas, _Projector p) {
-    _drawTextBox(canvas, p, 'VP TƯ VẤN TUYỂN SINH', 0.55, 0.90, 0.20, 0.03);
+    _drawTextBox(
+      canvas,
+      p,
+      'VP TÆ¯ Váº¤N TUYá»‚N SINH',
+      0.55,
+      0.90,
+      0.20,
+      0.03,
+    );
     _drawVerticalBooths(canvas, p, 0.57, 0.48, 0.035, 0.12);
     _drawVerticalBooths(canvas, p, 0.58, 0.37, 0.035, 0.10);
 
@@ -457,10 +488,42 @@ class _OpenDayMapPainter extends CustomPainter {
   }
 
   void _drawOuterLabels(Canvas canvas, _Projector p) {
-    _drawText(canvas, p, 'KHU NHÀ A', 0.49, 0.73, size: 7, color: Colors.white);
-    _drawText(canvas, p, 'KHU NHÀ B', 0.53, 0.36, size: 7, color: Colors.white);
-    _drawText(canvas, p, 'KHU NHÀ C', 0.45, 0.35, size: 7, color: Colors.white);
-    _drawText(canvas, p, 'KHU NHÀ D', 0.44, 0.54, size: 7, color: Colors.white);
+    _drawText(
+      canvas,
+      p,
+      'KHU NHÃ€ A',
+      0.49,
+      0.73,
+      size: 7,
+      color: Colors.white,
+    );
+    _drawText(
+      canvas,
+      p,
+      'KHU NHÃ€ B',
+      0.53,
+      0.36,
+      size: 7,
+      color: Colors.white,
+    );
+    _drawText(
+      canvas,
+      p,
+      'KHU NHÃ€ C',
+      0.45,
+      0.35,
+      size: 7,
+      color: Colors.white,
+    );
+    _drawText(
+      canvas,
+      p,
+      'KHU NHÃ€ D',
+      0.44,
+      0.54,
+      size: 7,
+      color: Colors.white,
+    );
   }
 
   void _building3d(
